@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- 通过这个配置文件完成mybatis与数据的连接 -->
+<configuration>
+
+    <!--给实体类起别名-->
+    <typeAliases>
+        <package name="com.pro.pojo"/>
+    </typeAliases>
+
+    <!--数据源的配置-->
+    <environments default="a">
+        <environment id="a">
+            <!--事务管理配置-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--数据源的配置-->
+            <!-- POOLED:mybatis自带的数据源 JNDI:基于tomcat的数据源 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql://localhost:3306/BookWeb?useUnicode=true&amp;characterEncoding=utf-8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--引入映射文件-->
+    <mappers>
+        <mapper resource="com/pro/dao/BooksMapper.xml"></mapper>
+
+    </mappers>
+
+</configuration>

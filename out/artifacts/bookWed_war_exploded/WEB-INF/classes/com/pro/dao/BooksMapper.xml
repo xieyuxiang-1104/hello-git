@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--sql 映射-->
+<!-- namespace的名字需要跟接口的类名一致 -->
+<mapper namespace="com.pro.dao.BooksDao">
+
+
+    <!--添加-->
+    <insert id="addBook" parameterType="Books">
+            insert into Books(bookName,bookAuthor,bookPublish,bookPrice) values(#{bookName},#{bookAuthor},#{bookPublish},#{bookPrice})
+        </insert>
+
+
+    <select id="getAllByExamp" resultType="Books">
+        select bookId,bookName,bookAuthor,bookPublish,bookPage,bookPrice from Books
+        <!-- /*where 标签会自动过滤掉多余的and 或者 or 关键字*/    #{bookAuthor}-->
+        <where>
+            <if test="bookName!=null">
+                and bookName like '%${bookName}%'
+
+            </if>
+
+            <if test="bookAuthor!=null">
+                and bookAuthor like '%${bookAuthor}%'
+            </if>
+        </where>
+    </select>
+
+</mapper>

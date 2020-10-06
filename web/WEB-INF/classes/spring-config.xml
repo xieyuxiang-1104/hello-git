@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--1.数据源-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url"
+                  value="jdbc:mysql://localhost:3306/bookweb?useUnicode=true&amp;characterEncoding=utf-8"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="root"></property>
+    </bean>
+
+    <!--2.SqlSessionFactory-->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--2.1 获取数据-->
+        <property name="dataSource" ref="dataSource"></property>
+        <!--2.2 加载映射文件-->
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:com/pro/dao/*.xml</value>
+            </list>
+        </property>
+        <!--2.3 实体类起别名-->
+        <property name="typeAliasesPackage" value="com.pro.pojo"></property>
+    </bean>
+
+    <!--3. 自动扫描dao接口，获取dao实例对象-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.pro.dao"></property>
+    </bean>
+
+    <!--4. 实例化业务逻辑层对象-->
+<bean id="bookService" class="com.pro.service.Imp.BookServiceImp">
+        <property name="booksDao" ref="booksDao"></property>
+    </bean>
+
+</beans>
